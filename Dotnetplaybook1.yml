@@ -1,26 +1,24 @@
 ---
-- name: installing dotnet core  on ubuntu
+- name: installing dotnet 7
   hosts: all
+  become: yes
   tasks:
-    - name: Download MS product repository
+    - name: downloading the microsoft debian packages
       get_url:
-        url: wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+        url: https://packages.microsoft.com/config/ubuntu/22.10/packages-microsoft-prod.deb
         dest: /tmp/packages-microsoft-prod.deb
-    - name: Install MS product repository
-      apt: deb=/tmp/packages-microsoft-prod.deb
-      become: true
-    - name: Make sure HTTPS is supported by apt
+    - name: installing debian package
       apt:
-        name: apt-transport-https
-        state: present
-        update_cache: yes
-      become: true
-    - name: Install .NET Core SDK
+        deb: /tmp/packages-microsoft-prod.deb
+    - name: installing donet 7
       apt:
-        name: dotnet-sdk-6.0
+        update_cache: true
+        name: dotnet-sdk-7.0
         state: present
-        update_cache: yes
-      become: true
+
+
+
+
 
 
 
